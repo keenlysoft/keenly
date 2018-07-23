@@ -1,0 +1,24 @@
+{
+    "name": "keenlysoft/keenly",
+    "type": "library",
+    "description": "An efficient php framework keenly",
+    "keywords" : ["keenly", "php framework", "async","easyswoole"],
+    "license" : "Apache-2.0",
+    "authors": [
+        {
+            "name": "brain_yang",
+            "email": "463247339@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.0",
+    },
+    "autoload": {
+        "psr-4": {
+		  "controllers\\":"controllers",
+		  "models\\":"models",
+		  "database\\":"database",
+		  "keenly\\":"keenlysoft"
+        }
+    }
+}
