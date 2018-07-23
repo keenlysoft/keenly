@@ -2,7 +2,7 @@
     "name": "keenlysoft/keenly",
     "type": "library",
     "description": "An efficient php framework keenly",
-    "keywords" : ["keenly", "php framework", "async","easyswoole"],
+    "keywords" : ["keenly", "php framework", "async"],
     "license" : "Apache-2.0",
     "authors": [
         {
