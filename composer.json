@@ -18,13 +18,5 @@
     "require": {
         "php": ">=5.6.0",
         "twitter/bootstrap": "4.1.2"
-    },
-    "autoload": {
-        "psr-4": {
-		  "controllers\\":"controllers",
-		  "models\\":"models",
-		  "database\\":"database",
-		  "keenly\\":"keenlysoft"
-        }
     }
 }
