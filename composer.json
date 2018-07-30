@@ -10,7 +10,8 @@
             "email": "463247339@qq.com"
         }
     ],
-    "minimum-stability": "stable",
+    "type":"path",
+    "minimum-stability": "dev",
     "require": {
         "php": ">=5.6.0"
     }
