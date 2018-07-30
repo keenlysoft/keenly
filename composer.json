@@ -1,18 +1,15 @@
 {
-    "name": "keenlysoft/keenly",
-    "type": "library",
-    "description": "An efficient php framework keenly",
-    "keywords" : ["keenly", "php framework", "async"],
-    "license" : "Apache-2.0",
-    "authors": [
-        {
-            "name": "brain_yang",
-            "email": "463247339@qq.com"
-        }
-    ],
-    "type":"path",
-    "minimum-stability": "dev",
-    "require": {
-        "php": ">=5.6.0"
-    }
+	"name": "keenlysoft/keenly",
+	"description": "An efficient php framework keenly",
+	"type": "library",
+	"license": "Apache-2.0",
+	"authors": [{
+		"name": "brain_yang",
+		"email": "463247339@qq.com"
+	}],
+	"require": {
+	  "php": ">=5.6"
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true
 }
