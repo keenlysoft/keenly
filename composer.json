@@ -2,6 +2,33 @@
 	"name" : "keenlysoft/keenly",
 	"description" : "An efficient php framework keenly",
 	"type" : "library",
-	"license" : "Apache-2.0"
-
+	"license" : "Apache-2.0",
+	"authors" : [{
+			"name" : "brain_yang",
+			"email" : "qiaopi520@qq.com"
+		}
+	],
+	"require" : {
+		"twbs/bootstrap" : "4.1.2",
+		"smarty/smarty" : "^3.1"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"database\\" : "keenlysoft\\database",
+			"keenly\\" : "keenlysoft"
+		},
+		"files" : [
+			"keenlysoft/keenly.php"
+		]
+	},
+	"bin" : [
+		"keenlysoft/base/keenly"
+	],
+	"support" : {
+		"email" : "qiaopi520@qq.com"
+	},
+	"keywords" : [
+		"keenly",
+		"php framework"
+	]
 }
