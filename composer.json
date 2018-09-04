@@ -19,15 +19,15 @@
 	},
 	"autoload" : {
 		"psr-4" : {
-			"database\\" : "keenlysoft\\database",
-			"keenly\\" : "keenlysoft"
+			"database\\" : "keenlysoft\\keenly\\database",
+			"keenly\\" : "keenlysoft\\keenly"
 		},
 		"files" : [
-			"keenlysoft/keenly.php"
+			"keenlysoft/keenly/keenly.php"
 		]
 	},
 	"bin" : [
-		"keenlysoft/base/keenly"
+		"keenlysoft/keenly/base/keenly"
 	],
 	"require-dev" : {
 		"phpunit/phpunit" : "^5.6"
