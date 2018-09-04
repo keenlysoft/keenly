@@ -1,18 +1,7 @@
 {
-	"name": "keenlysoft/keenly",
-	"description": "An efficient php framework keenly",
-	"type": "library",
-	"license": "Apache-2.0",
-	"authors": [{
-		"name": "brain_yang",
-		"email": "463247339@qq.com"
-	}],
-	"require": {
-	  "php": ">=5.6",
-	  "twbs/bootstrap": "4.1.2",
-      "smarty/smarty": "^3.1"
-	},
-	"minimum-stability": "dev",
-	"prefer-stable": true,
-	"versions":"1.1.5"
+	"name" : "keenlysoft/keenly",
+	"description" : "An efficient php framework keenly",
+	"type" : "library",
+	"license" : "Apache-2.0"
+
 }

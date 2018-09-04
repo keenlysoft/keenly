@@ -1,0 +1,6 @@
+#!/usr/bin/env php
+<?php
+echo getcwd(), "\n";
+$stdin = fopen('php://stdin', 'r');
+var_dump($stdin);
+echo  $argv;
