@@ -27,7 +27,7 @@
 		]
 	},
 	"bin" : [
-		"keenlysoft/keenly/base/keenly"
+		"keenlysoft/keenly/bin/keenly"
 	],
 	"require-dev" : {
 		"phpunit/phpunit" : "^5.6"
