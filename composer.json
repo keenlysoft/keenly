@@ -16,7 +16,8 @@
 	"require" : {
 		"php" : ">=7.1.0",
 		"twbs/bootstrap" : "4.1.2",
-		"smarty/smarty" : "^3.1"
+		"smarty/smarty" : "^3.1",
+		"keenlysoft/database":"^1.2"
 	},
 	"autoload" : {
 		"psr-4" : {
