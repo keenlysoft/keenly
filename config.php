@@ -5,7 +5,7 @@ namespace keenly;
  * @author brain_yang<qiaopi520@qq.com>
  * (c) brain_yang
  * github: https://github.com/keenlysoft/
- * @time 2018年6月27日
+ * @time 2018年6月27日 
  * For the full copyright and license information, please view the LICENSE
  */
 class config {
