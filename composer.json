@@ -1,9 +1,10 @@
 {
 	"name" : "keenlysoft/keenly",
-	"description" : "An efficient php framework keenly",
+	"description" : "An efficient php framework keenly ",
 	"keywords" : [
 		"keenly",
-		"php framework"
+		"php framework",
+		"keenly framework"
 	],
 	"type" : "library",
 	"license" : "Apache-2.0",
@@ -19,15 +20,14 @@
 	},
 	"autoload" : {
 		"psr-4" : {
-			"database\\" : "keenlysoft\\keenly\\database",
-			"keenly\\" : "keenlysoft\\keenly"
+			"keenly\\" : ""
 		},
 		"files" : [
-			"keenlysoft/keenly/keenly.php"
+			"keenly.php"
 		]
 	},
 	"bin" : [
-		"keenlysoft/keenly/bin/keenly"
+		"bin/keenly"
 	],
 	"require-dev" : {
 		"phpunit/phpunit" : "^5.6"
