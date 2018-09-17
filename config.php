@@ -21,23 +21,40 @@ class config {
     private static $instance;
     
     private static $defule = 'database';
+   
+    //const CLIPATH = ;
     
-    public function Get($name = null,$value = null){
+    public function Get($name = null,$value = null,...$param){
         if(!isset($name)) return  self::$config;
         return  isset($value)?self::$config[$name][$value]:self::$config[$name];
     }
     
     
-    
+    /**
+     * This file is part of keenly from.
+     * @author brain_yang<qiaopi520@qq.com>
+     * (c) brain_yang
+     * github: https://github.com/keenlysoft/
+     * @time 2018年8月27日
+     * @param $file 文件名称
+     * @param $rangePath 文件路径
+     * For the full copyright and license information, please view the LICENSE
+     */
     public static function reload($file,$rangePath = null){
         if(!empty($rangePath)){
             self::$rangePath = $rangePath;
         }
-        $file = self::$rangePath.$file.'.'.self::$format;
+        if (PHP_SAPI === 'cli'){
+            $cilpath = realpath(dirname(dirname(dirname(dirname(__FILE__))))).'/config/';
+            $file = $cilpath.$file.'.'.self::$format;
+        }else{
+            $file = self::$rangePath.$file.'.'.self::$format;
+        }
         $name = strtolower($file);
         $type = pathinfo($file, PATHINFO_EXTENSION);
+        
         if(self::$format == $type)
-        return self::set(include $file);  
+            return self::set(include $file);  
     }
     
     
