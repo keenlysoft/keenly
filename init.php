@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 use keenly\base\binModel;
 define("DIR",realpath(getcwd()));
@@ -7,7 +8,10 @@ function commit_all(){
     list($param,$options)= Calibrate_Mode();
     switch ($param){
         case 'model':
-            (new binModel())->Model($options);
+            (new binModel())->CreateModel($options);
+            break;
+        case 'model':
+            (new binModel())->CreateModel($options);
             break;
         default :
             

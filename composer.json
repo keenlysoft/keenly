@@ -35,5 +35,11 @@
 	},
 	"support" : {
 		"email" : "qiaopi520@qq.com"
-	}
+	},
+	"repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.laravel-china.org"
+        }
+    }
 }
