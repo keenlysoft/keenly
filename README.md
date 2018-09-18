@@ -1,2 +1,48 @@
-# keenly
-keenly is PHP frame
+
+# 安装
+使用Composer来安装keenly框架
+### composer源使用
+`
+composer config -g repo.packagist composer https://packagist.laravel-china.org
+`
+### 创建项目
+`
+composer create-project keenlysoft/app keenly
+`
+### nginx配置
+```
+server{
+           listen 80;
+           #access_log  /usr/local/keenly.log;
+           #error_log /usr/local/nginx/logs/keenly_error.log;
+           server_name  keenly.com;
+           index index.html index.htm index.php;
+           root /keenly/web;
+           location / {
+                try_files $uri $uri/ /index.php?$query_string;
+           }
+           location ~* ^/protected/views/.*\.(php|php5)$
+           {
+             deny all;
+           }
+           location ~ [^/]\.php(/|$)
+           {
+             try_files $uri =404;
+             fastcgi_pass  unix:/dev/shm/php-cgi.sock;
+             fastcgi_index index.php;
+             include fastcgi.conf;
+           }
+           location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|flv|ico)$ {
+             add_header Cache-Control 'no-store';
+           }
+}
+```
+
+``
+* 注意 fastcgi_pass 请更换自己服务器环境正确地址；
+
+* Web.config 写iis配置文件 service 2008
+``
+
+
+## [数据库使用](https://github.com/keenlysoft/database "数据库使用")

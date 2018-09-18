@@ -14,7 +14,11 @@
 		}
 	],
 	"require" : {
+<<<<<<< HEAD
 		"php" : ">=7.0",
+=======
+		"php" : ">=7.0.0",
+>>>>>>> c7a5b541f21e06b326fa9a33b91705711ea63382
 		"twbs/bootstrap" : "4.1.2",
 		"smarty/smarty" : "^3.1",
 		"keenlysoft/database":"^1.2"
