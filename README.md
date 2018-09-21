@@ -1,4 +1,3 @@
-
 # 安装
 使用Composer来安装keenly框架
 ### composer源使用
@@ -44,5 +43,5 @@ server{
 * Web.config 写iis配置文件 service 2008
 ``
 
-
+## [视图使用](https://github.com/keenlysoft/keenly/blob/master/VIEW.md "视图使用")
 ## [数据库使用](https://github.com/keenlysoft/database "数据库使用")
