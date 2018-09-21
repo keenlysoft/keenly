@@ -27,6 +27,7 @@ class binModel extends models{
         if(empty($parame)){
             $this->CreateAllModel();
         }else{
+            
             $this->CreateOneModel($parame);
         }
     }
@@ -38,7 +39,6 @@ class binModel extends models{
         if(is_array($this->tables) && !empty($this->tables)){
             foreach ($this->tables as $table){
                 $this->CreateOneModel($table);
-                
             }
         }
     }
@@ -50,7 +50,9 @@ class binModel extends models{
         }
         if(is_array($parame) && isset($parame['0'])){
             if(strtolower($parame['0']) == '-f' && isset($parame['1'])){
-                $this->CrateTable($parame['1']);
+                $this->CrateTable($parame['1'],false);
+            }else{
+                $this->CrateTable($parame['0'],true);
             }
         }elseif (isset($parame)){
             
@@ -60,10 +62,9 @@ class binModel extends models{
     
     
     
-    private function CrateTable($Tables){
+    private function CrateTable($Tables,$state = true){
         $Table = $this->TableName($Tables);
-        
-        $this->writeFile($Table['cName'],$Table['tName'],false);
+        $this->writeFile($Table['cName'],$Table['tName'],$state);
     }
     
     
@@ -86,13 +87,17 @@ class binModel extends models{
     private function writeFile($className,$tableName,$status = TRUE){
         $file_path = KEENLY_CLI_DS.DIRECTORY_SEPARATOR.'models'.DIRECTORY_SEPARATOR.$className.'.php';
         $this->ModelTpl($className,$tableName);
+        
         if (!file_exists($file_path) && $status){
+            
             file_put_contents($file_path, $this->Tpl);
             $status = true;
+            
         }elseif (!$status){
             file_put_contents($file_path, $this->Tpl);
             $status = true;
         }else{
+            
             $status = false;
         }
         $this->showModelTip($tableName,$status);

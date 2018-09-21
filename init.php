@@ -1,6 +1,7 @@
 #!/usr/bin/env php
 <?php
 use keenly\base\binModel;
+use keenly\base\command;
 define("DIR",realpath(getcwd()));
 require DIR.'/vendor/autoload.php';
 
@@ -10,8 +11,8 @@ function commit_all(){
         case 'model':
             (new binModel())->CreateModel($options);
             break;
-        case 'model':
-            (new binModel())->CreateModel($options);
+        case 'cli':
+            (new command())->line_interface($options);
             break;
         default :
             

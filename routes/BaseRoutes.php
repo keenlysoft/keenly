@@ -19,7 +19,7 @@ class BaseRoutes{
     
 
     public static  function set_error_Model(){
-       (new baseApp())->_int();
+       baseApp::I()->_int();
        self::$C = config::reload('config')->Get();
        if(self::$C['debug']){
             error_reporting(-1);

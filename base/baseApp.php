@@ -18,7 +18,8 @@ use keenly\config;
  *
  */
 class baseApp{
-
+ 
+    use Singleton;
     
     public function __construct(){
         keenly::$app = $this;
