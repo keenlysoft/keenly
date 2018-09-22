@@ -2,7 +2,7 @@
 使用Composer来安装keenly框架
 ### composer源使用
 `
-composer config -g repo.packagist composer https://packagist.laravel-china.org
+composer config  repo.packagist composer https://packagist.laravel-china.org
 `
 ### 创建项目
 `
@@ -37,11 +37,18 @@ server{
 }
 ```
 
-``
+
 * 注意 fastcgi_pass 请更换自己服务器环境正确地址；
 
 * Web.config 写iis配置文件 service 2008
-``
 
+## 生成 model
+在网站更目录使用
+```
+php keenly model #生成全部
+php keenly model user #生成某一个
+php keenly model -f user  #强制生成
+
+```
 ## [视图使用](https://github.com/keenlysoft/keenly/blob/master/VIEW.md "视图使用")
 ## [数据库使用](https://github.com/keenlysoft/database "数据库使用")
