@@ -50,5 +50,11 @@ php keenly model user #生成某一个
 php keenly model -f user  #强制生成
 
 ```
+## cli模式运行
+php keenly cli admin@index@index 参数1 参数2
+说明：admin@index@index === 项目@控制类名称@方法 参数可选
+
+
+
 ## [视图使用](https://github.com/keenlysoft/keenly/blob/master/VIEW.md "视图使用")
 ## [数据库使用](https://github.com/keenlysoft/database "数据库使用")
