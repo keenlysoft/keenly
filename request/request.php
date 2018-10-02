@@ -1,5 +1,7 @@
 <?php
 namespace keenly\request;
+use keenly\base\Singleton;
+
 /**
  * This file is part of keenly from.
  * @author brain_yang<qiaopi520@qq.com>
@@ -9,6 +11,8 @@ namespace keenly\request;
  * For the full copyright and license information, please view the LICENSE
  */
 class request{
+    
+    use Singleton;
     
     private $_bodyParams;
     

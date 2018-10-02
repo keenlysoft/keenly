@@ -30,5 +30,24 @@ class command{
     
     
     
+    public function start($param){
+        switch ($param){
+            case 'rpc':
+                
+                break;
+            default :
+                
+                break;
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 }

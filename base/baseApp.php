@@ -49,7 +49,7 @@ class baseApp{
     
     private function createObject($name){
         if(class_exists($name["class"])){
-           $this->request =  new $name["class"]();
+           $this->request =  $name["class"]::I();
            return $this->request;
         }
         return false;
@@ -62,10 +62,12 @@ class baseApp{
      */
     public function coreComponents()
     {
-        return [
+       $config_used= config::reload('config')->Get('used_ioc');
+       $use_load = [
             'request' => ['class' => 'keenly\request\request'],
             'config' => ['class' => 'keenly\config']
         ];
+       return array_merge($use_load,$config_used);
     }
     
 }
