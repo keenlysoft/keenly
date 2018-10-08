@@ -14,6 +14,9 @@ function commit_all(){
         case 'cli':
             (new command())->line_interface($options);
             break;
+        case 'start':
+            (new command())->start($options);
+            break;
         default :
             
             break;

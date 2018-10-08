@@ -78,6 +78,7 @@ class k{
     
     
     private static function setView($file){
+        
         self::$tempEngine->display($file.self::$config['file_postfix']);
     }
     
@@ -95,7 +96,7 @@ class k{
     private static function MkBaseDir(){
         $vendorDir = dirname(dirname(__FILE__));
         $baseDir = dirname($vendorDir);
-        return dirname($baseDir).DIRECTORY_SEPARATOR.self::$project;
+        return dirname(dirname($baseDir)).DIRECTORY_SEPARATOR.self::$project;
     }
     
     
