@@ -29,7 +29,13 @@ return [
           ]
       ],
      'redis' =>[
-          
+        'driver'    => 'pconnect', //or connect redis attended mode 
+        'host'      => '127.0.0.1',
+        'port'      => '6379',
+        'password'  => '1234567',
+        'selectDB'  => '0', //默认数据库
+        'timeout'   => '1',
+        'rebinding' => '100'
      ],
 
 ];

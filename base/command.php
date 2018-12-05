@@ -1,9 +1,7 @@
 <?php
 namespace keenly\base;
 
-use admin\controllers\indexController;
 
-use index\controllers\SocketController;
 
 class command{
     

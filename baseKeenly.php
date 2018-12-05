@@ -10,7 +10,7 @@ class baseKeenly {
      * @var \keenly\base\baseApp the baseApp instance
      * @author jack_yang <463247339@qq.com>
      */
-    public static $app;
+    public static $box;
     /**
      * @var \keenly\base\baseApp the baseApp instance
      * @author jack_yang <463247339@qq.com>

@@ -14,6 +14,7 @@ use keenly\config;
 /**
  * keenly 
  * @property \keenly\request\request $request The request component. This property is read-only.
+ * @property \database\redis\redis $redis The request component. This property is read-only.
  * @author jack_yang <463247339@qq.com>
  *
  */
@@ -21,9 +22,10 @@ class baseApp{
  
     use Singleton;
     
+    private $reload_name;
+    
     public function __construct(){
-        keenly::$app = $this;
-        return $this;
+        keenly::$box = $this;
     }
     
     
@@ -35,8 +37,8 @@ class baseApp{
     
     public function __get($name){
         if(isset($name)){
-            $cName = $this->getClass($name);
-            return $this->createObject($cName);
+            $this->reload_name = $name;
+            return $this->createObject($this->getClass($name));
         }
     }
     
@@ -48,9 +50,18 @@ class baseApp{
     
     
     private function createObject($name){
+        
         if(class_exists($name["class"])){
            $this->request =  $name["class"]::I();
-           return $this->request;
+           switch ($this->reload_name)
+           {
+               case 'redis':
+                   return $this->request->redis;
+               break;
+               default:
+                   return $this->request;
+           }
+           
         }
         return false;
     }
@@ -62,12 +73,13 @@ class baseApp{
      */
     public function coreComponents()
     {
-       $config_used= config::reload('config')->Get('used_ioc');
+       $config_used = config::reload('config')->Get('used_ioc');
        $use_load = [
             'request' => ['class' => 'keenly\request\request'],
-            'config' => ['class' => 'keenly\config']
+            'config' => ['class' => 'keenly\config'],
+            'redis' => ['class' => 'database\redis\redis']
         ];
-       return array_merge($use_load,$config_used);
+       return array_merge($use_load,(isset($config_used)?$config_used:[]));
     }
     
 }

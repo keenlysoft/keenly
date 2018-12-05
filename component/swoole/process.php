@@ -2,123 +2,147 @@
 namespace keenly\component\swoole;
 use swoole_process;
 use keenly\base\Singleton;
-
-class process extends  swoole_process{
+use models\User;
+use keenly\component\Box;
+/**
+ * This file is part of keenly from.
+ * @author brain_yang<qiaopi520@qq.com>
+ * (c) brain_yang
+ * github: https://github.com/keenlysoft/
+ * @time 2018年8月27日
+ * For the full copyright and license information, please view the LICENSE
+ */
+class process {
     
     use Singleton;
     
-    public $mpid = 0;
+    private $process;
     
-    public $workerNum = 2;
+    public  $works = [];
     
-    public $works = [];
+    private $pro = [];
     
-    public $max_precess = 1;
-    
-    public $new_index = 0;
-    
-    
-    public function add(string $name){
-        $process = new self([$this,'callNew'],true);
-        $process->name($name);
-        $process->state();
+    private $index = 0;
+    /**
+     * @name 添加进程
+     * 进程检测和自动回收僵尸进程
+     * @param 进程名称 $name
+     * @param 唯一标识 $key
+     * @param callb $fun
+     * @param 执行参数 ...$arg
+     * @author brain_yang <qiaopi520@qq.com>
+     * @time 2018年10月6日 15:52:04
+     * This file is part of keenly from.
+     */
+    public function addprocess($name,$key,callable $fun,...$arg){
+        Box::I()->add($key, $fun,...$arg);
+        $this->setName($name);
+        $this->process = new \swoole_process(function(swoole_process $worker)use($key){
+            $this->pro[$this->index]['obj'] = $worker;
+            $this->pro[$this->index]['key'] = $key;
+            $this->index++;
+            Box::I()->call($key);
+        }, true, false);
+        return $this;
     }
     
     
-    public function addProcess(string $name){
-        (new class{
-            public $mpid = 0;
-            public $works = [];
-            public $max_precess = 1;
-            public $new_index=0;
-            
-            public function __construct(){
-                try {
-                    \swoole_set_process_name(sprintf('php-ps:%s', 'master'));
-                    $this->mpid = posix_getpid();
-                    $this->run();
-                    $this->processWait();
-                }catch (\Exception $e){
-                    die('ALL ERROR: '.$e->getMessage());
-                }
-            }
-            
-            public function run(){
-                for ($i=0; $i < $this->max_precess; $i++) {
-                    $this->CreateProcess();
-                }
-            }
-            
-            public function CreateProcess($index=null){
-                $process = new \swoole_process(function(swoole_process $worker)use($index){
-                    if(is_null($index)){
-                        $index=$this->new_index;
-                        $this->new_index++;
-                    }
-                    \swoole_set_process_name(sprintf('php-ps:%s',$index));
-                    for ($j = 0; $j < 16000; $j++) {
-                        $this->checkMpid($worker);
-                        echo "msg: {$j}\n";
-                        sleep(1);
-                }
-                }, false, false);
-                    $pid = $process->start();
-                    $this->works[$index]=$pid;
-                    return $pid;
-            }
-            
-            
-            
-            public function checkMpid(&$worker){
-                if(!swoole_process::kill($this->mpid,0)){
-                    $worker->exit();
-                    // 这句提示,实际是看不到的.需要写到日志中
-                    echo "Master process exited, I [{$worker['pid']}] also quit\n";
-                }
-            }
-            
-            public function rebootProcess($ret){
-                $pid=$ret['pid'];
-                $index=array_search($pid, $this->works);
-                if($index!==false){
-                    $index=intval($index);
-                    $new_pid=$this->CreateProcess($index);
-                    echo "rebootProcess: {$index}={$new_pid} Done\n";
-                    return;
-                }
-                throw new \Exception('rebootProcess Error: no pid');
-            }
-            
-            public function processWait(){
-                while(1) {
-                    if(count($this->works)){
-                        $ret = swoole_process::wait();
-                        if ($ret) {
-                            $this->rebootProcess($ret);
-                        }
-                    }else{
-                        break;
-                    }
-                }
-            }
-        });
-        
-        
-        
+    private function setName($name){
+        return \swoole_set_process_name($name);
+    }
+    
+    /**
+     * @name 开启进程
+     * @param 为true表示不要切换当前目录到根目录              $nochdir
+     * @param 为true表示不要关闭标准输入输出文件描述符   $noclose
+     * @desc 
+     * 此函数在1.7.5版本后可用
+     * 1.9.1或更高版本修改了默认值，现在默认nochir和noclose均为true
+     * 蜕变为守护进程时，该进程的PID将发生变化，可以使用getmypid()来获取当前的PID
+     *  
+     */
+    
+    public function start($nochdir = TRUE,$noclose = TRUE){
+        //\swoole_process::daemon($nochdir,$noclose);
+        $this->works[$this->index] = $this->process->start();
+        $this->processWait();
+    }
+    
+    /**
+     * 获取Index 
+     * 也是表示进程次数;
+     * 进程和worke对象属性中
+     * $this->pro[$this->getIndex()]['obj']->exec() 执行进程 或者 进程写 write(string $data) or read();
+     *  or $this->works;
+     * @author brain_yang <qiaopi520@qq.com>
+     * @return number
+     */
+    public function getIndex(){
+        return $this->index;
     }
     
     
-    
-    private function callNew(self $worker, $index = null){
-        if(is_null($index)){
-            $index = $this->new_index;
-            $this->new_index ++;
+    public function processWait(){
+        while(1) {
+            if(count($this->works)){
+                $ret = \swoole_process::wait();
+                var_dump($this->works);
+                sleep(1);
+                if ($ret) {
+                    $this->rebootProcess($ret);
+                }
+            }else{
+                break;
+            }
         }
-        var_dump(121);
     }
     
     
     
+    public function rebootProcess($ret){
+        $pid = $ret['pid'];
+        var_dump($this->works);
+        $index = array_search($pid, $this->works);
+        if($index !== false){
+            $index = intval($index);
+            $new_pid = $this->CreateProcess($index);
+            return;
+        }
+        throw new \Exception('rebootProcess Error: no pid');
+    }
     
     
+    
+    public function CreateProcess($index = null){
+        $process = new \swoole_process(function(swoole_process $worker)use($index){
+            if(is_null($index)){
+                $index = $this->index;
+                $this->index++;
+            }
+            \swoole_set_process_name(sprintf('keenly:%s',$index));
+            var_dump($this->pro);
+            if(isset($this->pro[$index])){
+                Box::I()->call($this->pro[$index]['key']);
+            }
+        }, false, false);
+        $pid = $process->start();
+        $this->works[$index] = $pid;
+        return $pid;
+    }
+  
+    
+    /**
+     * $pid 进程ID
+     * 默认的信号为SIGTERM，表示终止进程
+     * $signo=0，可以检测进程是否存在，不会发送信号
+     */
+    public static function kill($pid, $signo = SIGTERM){
+        return parent::kill($pid, $signo);
+   }
+    
+  
 }
+    
+    
+    
+    

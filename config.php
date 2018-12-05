@@ -26,7 +26,9 @@ class config {
     
     public function Get($name = null,$value = null,...$param){
         if(!isset($name)) return  self::$config;
-        return  isset($value)?self::$config[$name][$value]:self::$config[$name];
+        return  isset($value)?
+        self::$config[$name][$value]
+        :(isset(self::$config[$name])?self::$config[$name]:null);
     }
     
     

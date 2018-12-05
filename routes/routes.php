@@ -16,6 +16,14 @@ use keenly\view\k;
  * @method static get(['api'=>'home@api','getname'=>'home@getname']);
  * @method static post(['api'=>'home@api','getname'=>'home@getname']);
  * @method static api('request'['api'=>'home@api']);
+ * @method static put(string $route, mixed $handler, array $opts = [])
+ * @method static delete(string $route, mixed $handler, array $opts = [])
+ * @method static options(string $route, mixed $handler, array $opts = [])
+ * @method static head(string $route, mixed $handler, array $opts = [])
+ * @method static search(string $route, mixed $handler, array $opts = [])
+ * @method static connect(string $route, mixed $handler, array $opts = [])
+ * @method static trace(string $route, mixed $handler, array $opts = [])
+ * @method static any(string $route, mixed $handler, array $opts = [])
  * @author jack_yang
  * @link
  *
@@ -49,7 +57,7 @@ class routes extends BaseRoutes{
     
     private static $Rmethod;
     
-    
+    private static $interest = [];
     
     
     public static function  __callstatic($method,$params){
@@ -132,8 +140,7 @@ class routes extends BaseRoutes{
             echo "controller not class ". $class;
             return ;
         }
-        
-        $control = new $class();
+        $control = self::interest($class);
         if (!method_exists($control, $fun)) {
             echo "controller and action not found";
             return ;
@@ -154,6 +161,20 @@ class routes extends BaseRoutes{
             header($_SERVER['SERVER_PROTOCOL']." 404 Not Found");
             die("Request mode error");
         }
+    }
+    
+    /**
+     * @name interest instantiation class
+     * @param classname $class
+     * @return mixed|unknown
+     */
+    
+    private static function  interest($class){
+        $classNum = md5($class);
+        if(isset(self::$interest[$classNum]) && !empty(self::$interest[$classNum])){
+            return self::$interest[$classNum];
+        }
+        return self::$interest[$classNum] = new $class();
     }
     
     

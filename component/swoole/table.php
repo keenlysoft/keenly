@@ -90,7 +90,8 @@ class table extends \swoole_table{
      */
     function column($name, $type, $len = 4)
     {
-        return parent::column($name, $type, $len);
+        parent::column($name, $type, $len);
+        return $this;
     }
     
     /**
