@@ -53,6 +53,26 @@ php keenly model -f user  #强制生成
 ## cli模式运行
 php keenly cli admin@index@index 参数1 参数2
 说明：admin@index@index === 项目@控制类名称@方法 参数可选
+## redis 连接
+### config/database.php 配置设置
+```
+'redis' =>[
+           'driver'    => 'pconnect', //or connect redis attended mode 
+           'host'      => '127.0.0.1',
+           'port'      => '6379',
+           'password'  => '1234567',
+           'selectDB'  => '0',  //默认数据库
+           'timeout'   => '1',  //超时秒
+           'rebinding' => '100' //重连机制
+     ],
+```
+
+```
+use keenly;
+keenly::$box->redis->set();
+// use() 设置数据库
+redis::I()->use('0')->set();
+```
 
 
 ## [路由配置](https://github.com/keenlysoft/keenly/blob/master/doc/routes.md "路由配置")
