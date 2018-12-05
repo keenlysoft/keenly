@@ -43,9 +43,9 @@ class Processpool
      */
     public function name(string $name)
     {
-        if (!PhpHelper::isMac()) {
+        
             $this->process->name($name);
-        }
+        
     }
     
     /**
