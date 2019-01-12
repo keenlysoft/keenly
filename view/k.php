@@ -84,9 +84,10 @@ class k{
     
     
     private static function setCache($cache,$ctime){
+        $switch = is_bool($cache)?$cache:self::$config['cache'];
         self::$tempEngine->cache_dir =  self::$dir.self::$config['template_cache'];
         self::$tempEngine->compile_dir =  self::$dir.self::$config['compile_dir'];
-        self::$tempEngine->caching = is_bool($cache)?$cache:self::$config['cache'];
+        self::$tempEngine->caching = $switch;
         $time = empty($ctime)?self::$config['cache_time']:$ctime;
         self::$tempEngine->setCacheLifetime($time);
     }

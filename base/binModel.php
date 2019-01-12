@@ -85,25 +85,27 @@ class binModel extends models{
     
     
     private function writeFile($className,$tableName,$status = TRUE){
-        $file_path = KEENLY_CLI_DS.DIRECTORY_SEPARATOR.'models'.DIRECTORY_SEPARATOR.$className.'.php';
+        $modelDir =  KEENLY_CLI_DS.DIRECTORY_SEPARATOR.'models';
+        $file_path = $modelDir.DIRECTORY_SEPARATOR.$className.'.php';
         $this->ModelTpl($className,$tableName);
-        
+        $this->CreateDir($modelDir);
         if (!file_exists($file_path) && $status){
-            
             file_put_contents($file_path, $this->Tpl);
             $status = true;
-            
         }elseif (!$status){
             file_put_contents($file_path, $this->Tpl);
             $status = true;
         }else{
-            
             $status = false;
         }
         $this->showModelTip($tableName,$status);
     }
     
-    
+    private function CreateDir($modelDir){
+        if(!is_dir($modelDir)){
+            mkdir($modelDir);
+        }
+    }
     
     private function showModelTip($table,$status){
         echo 'generative:'.$table.'  '.($status?'succeed':'exist').PHP_EOL;
@@ -118,7 +120,7 @@ class binModel extends models{
     
     private function GetTableName(){
         $res = $this->query("SHOW TABLES")->all();
-        $res = array_column($res, 'Tables_in_keenly');
+        $res = array_column($res, 'Tables_in_'.$this->dbh->dh->db['dbname']);
         $this->prefix = $this->dbh->dh->db['prefix'];
         return $res;
     }

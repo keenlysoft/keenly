@@ -27,6 +27,12 @@ class BaseRoutes{
         }else{
              error_reporting(0);
         }
+        self::set_Time();
     }
+    
+   private static function set_Time(){
+       return date_default_timezone_set('PRC');
+   } 
+    
     
 }

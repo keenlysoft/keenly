@@ -46,7 +46,7 @@ class request{
     {
         $params = $this->getQueryParams();
         
-        return isset($params[$name]) ? $params[$name] : $defaultValue;
+        return isset($params[$name]) ? htmlspecialchars($params[$name]) : $defaultValue;
     }
     
     
@@ -66,7 +66,7 @@ class request{
     {
         $params = $this->getBodyParams();
     
-        return isset($params[$name]) ? $params[$name] : $defaultValue;
+        return isset($params[$name]) ? htmlspecialchars($params[$name]) : $defaultValue;
     }
     
  
