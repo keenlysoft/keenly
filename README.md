@@ -73,6 +73,28 @@ keenly::$box->redis->set();
 // use() 设置数据库
 redis::I()->use('0')->set();
 ```
+## 分页
+```
+/**
+ *pagination()
+ *参数1：总条数
+ *参数2：当前页码
+ *参数3：每页条数
+ */
+  $pag = new pagination($user->Count(), $page,2);
+  $list = $user->limit($pag->limit)->offset($pag->offset)->all();
+  $pag->page() //视图分页HTML
+  //全部实例：
+  $user = User::find()->where('id > 0');
+        $pag = new pagination($user->Count(), $page,2);
+        $list = $user->limit($pag->limit)->offset($pag->offset)->all();
+        k::render('test',[
+                'list'=>$list,
+                'page'=>$pag->page()  
+        ]);
+   //view页码
+   {$page}
+```
 
 
 ## [路由配置](https://github.com/keenlysoft/keenly/blob/master/doc/routes.md "路由配置")
