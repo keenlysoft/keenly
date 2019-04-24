@@ -55,7 +55,7 @@ class session implements \ArrayAccess{
     
     
     
-    public function &__get($offset){
+    public function __get($offset){
         $this->open();
         return isset($_SESSION[$offset])?$_SESSION[$offset]:null;
     }

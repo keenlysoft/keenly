@@ -29,6 +29,10 @@ return [
         'routesName'  => 'controllers',
         'routesClass' => 'Controller',
     ],
+    'security' =>[
+    	'fontsize' => 6,
+    	
+    ],
      // 自定义类的加载
     // 需要使用  use Singleton; 单利模式加载
     // keenly::$app->xxxy->fun();
