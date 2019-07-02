@@ -38,7 +38,14 @@ class k{
     public static function render($dir, array $param = null,$cache = NULL,$ctime = NULL){
         $trace = debug_backtrace(1);
         self::$param = $param;
-        $project = isset($trace['3']['args']['0']['0'])?$trace['3']['args']['0']['0']:'admin';
+        if(isset($trace['3']['args']['0']['0'])){
+            $project = $trace['3']['args']['0']['0'];
+        }elseif (isset($trace['3']['args']['1'])){
+            $project = $trace['3']['args']['1'];
+        }else{
+            $project = 'admin';
+        }
+        $project = $project == 'admin'?'admin':'index';
         self::ReloadConfig($project);
         self::setTemplate();
         self::setCache($cache,$ctime);
