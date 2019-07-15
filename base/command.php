@@ -7,6 +7,7 @@ class command{
     
     
    public function line_interface($param){
+        baseApp::I()->_int(); //add init baseApp  keenly::$box;
         $env = isset($param['0'])?explode("@", $param['0']):0;
         unset($param['0']);
         if(count($env) == 3){

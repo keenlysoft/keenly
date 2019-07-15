@@ -58,6 +58,7 @@ class baseApp{
            switch ($this->reload_name)
            {
                case 'redis':
+                   
                    return $this->$object->redis;
                break;
                default:
