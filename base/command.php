@@ -3,6 +3,8 @@ namespace keenly\base;
 
 
 
+use keenly\component\swoole\Http;
+
 class command{
     
     
@@ -35,7 +37,7 @@ class command{
                 
                 break;
             default :
-                
+                (new Http())->run();
                 break;
         }
     }

@@ -140,14 +140,15 @@ class routes extends BaseRoutes{
             echo "controller not class ". $class;
             return ;
         }
+      
         $control = self::interest($class);
         if (!method_exists($control, $fun)) {
             echo "controller and action not found";
             return ;
         } else {
-            $control->$fun();
-            return ;
-        }
+           $control->$fun();
+           return ;
+        } 
     }
     
     /**
@@ -177,5 +178,18 @@ class routes extends BaseRoutes{
         return self::$interest[$classNum] = new $class();
     }
     
+    
+    
+    private static function push($url)
+    {
+        $client = new \swoole_client(SWOOLE_TCP | SWOOLE_KEEP);
+        if (!$client->connect('0.0.0.0', 9501, -1))
+        {
+            exit("connect failed. Error: {$client->errCode}\n");
+        }
+        $client->send($url);
+        var_dump($client->recv()) ;
+        $client->close();
+    }
     
 }
