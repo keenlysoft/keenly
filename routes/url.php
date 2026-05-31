@@ -23,9 +23,15 @@ class url {
     }
     
     private function weburl(){
-        
-       $port = $_SERVER['SERVER_PORT'] == $this->port?"":':'.$_SERVER['SERVER_PORT'];
-       return $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$port.$_SERVER["REQUEST_URI"];
+       $host = isset($_SERVER['SERVER_NAME'])?$_SERVER['SERVER_NAME']:'localhost';
+       if(!preg_match('/^[A-Za-z0-9.-]+$/', $host)){
+           $host = 'localhost';
+       }
+       $serverPort = isset($_SERVER['SERVER_PORT'])?(int)$_SERVER['SERVER_PORT']:$this->port;
+       $port = $serverPort == $this->port?"":':'.$serverPort;
+       $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')?'https':'http';
+       $requestUri = isset($_SERVER['REQUEST_URI'])?$_SERVER['REQUEST_URI']:'/';
+       return $scheme.'://'.$host.$port.$requestUri;
        
     }
     

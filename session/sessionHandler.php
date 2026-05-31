@@ -29,7 +29,7 @@ class sessionHandler  extends \SessionHandler {
             ini_set("session.save_path", $session['save_path']);
         }
         
-        $this->key = isset($session['key'])?$session['key']:'studious_key';
+        $this->key = isset($session['key'])?$session['key']:'';
         $this->name = $session['session_n'];
         $this->setSession($session);
     }
@@ -59,7 +59,7 @@ class sessionHandler  extends \SessionHandler {
         session_set_cookie_params(
             $C['session_indate'],
             $C['session_path'],
-            empty($C['session_domain'])?$_SERVER['HTTP_HOST']:$C['session_domain'],
+            $C['session_domain'],
             $C['http_session_secure'],
             $C['session_httponly']
         );

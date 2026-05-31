@@ -86,7 +86,6 @@ class process {
         while(1) {
             if(count($this->works)){
                 $ret = \swoole_process::wait();
-                var_dump($this->works);
                 sleep(1);
                 if ($ret) {
                     $this->rebootProcess($ret);
@@ -101,7 +100,6 @@ class process {
     
     public function rebootProcess($ret){
         $pid = $ret['pid'];
-        var_dump($this->works);
         $index = array_search($pid, $this->works);
         if($index !== false){
             $index = intval($index);
@@ -120,7 +118,6 @@ class process {
                 $this->index++;
             }
             \swoole_set_process_name(sprintf('keenly:%s',$index));
-            var_dump($this->pro);
             if(isset($this->pro[$index])){
                 Box::I()->call($this->pro[$index]['key']);
             }
@@ -137,7 +134,7 @@ class process {
      * $signo=0，可以检测进程是否存在，不会发送信号
      */
     public static function kill($pid, $signo = SIGTERM){
-        return parent::kill($pid, $signo);
+        return \swoole_process::kill($pid, $signo);
    }
     
   

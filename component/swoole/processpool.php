@@ -90,7 +90,7 @@ class Processpool
      *
      * @param float $timeout
      */
-    public function setTimeout(double $timeout)
+    public function setTimeout(float $timeout)
     {
         $this->process->setTimeout($timeout);
     }

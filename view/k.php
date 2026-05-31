@@ -35,7 +35,7 @@ class k{
     * @param: $ctime  cacheTime
     * @return:
     */
-    public static function render($dir, array $param = null,$cache = NULL,$ctime = NULL){
+    public static function render($dir, ?array $param = null,$cache = NULL,$ctime = NULL){
         $trace = debug_backtrace(1);
         self::$param = $param;
         if(isset($trace['3']['args']['0']['0'])){

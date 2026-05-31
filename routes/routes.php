@@ -109,13 +109,27 @@ class routes extends BaseRoutes{
     private static function allRule(){
         if(in_array("/(:all)",self::$Uri)){
             $pathurl = mb_substr(self::$Ruri, 1);
-            //if(strpos($pathurl,DIRECTORY_SEPARATOR)){
             $pathMethod = explode(DIRECTORY_SEPARATOR, $pathurl);
+            if(!self::isValidPath($pathMethod)){
+                self::error();
+                return ;
+            }
             self::InstancePath($pathMethod);
             return ;
-            //}
         }
         self::error();
+    }
+
+    private static function isValidPath(array $path){
+        if(count($path) < 1 || count($path) > 3){
+            return false;
+        }
+        foreach($path as $segment){
+            if(!preg_match('/^[A-Za-z_][A-Za-z0-9_]*$/', $segment)){
+                return false;
+            }
+        }
+        return true;
     }
     
     
@@ -188,8 +202,9 @@ class routes extends BaseRoutes{
             exit("connect failed. Error: {$client->errCode}\n");
         }
         $client->send($url);
-        var_dump($client->recv()) ;
+        $response = $client->recv();
         $client->close();
+        return $response;
     }
     
 }

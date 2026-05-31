@@ -17,10 +17,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Improved Composer package metadata and removed the obsolete regional Packagist mirror
 - Corrected the Composer PHP constraint to reflect syntax used by the current codebase
 - Changed configuration templates to avoid enabled debug mode, privileged database users, and hard-coded example passwords by default
+- Updated Bootstrap and Smarty within compatible major versions and removed the unused vulnerable PHPUnit 5 development dependency
 
 ### Fixed
 
 - Removed an accidental leading character from `component/Di.php` that could emit output when the class is loaded
+- Corrected session key deletion, session regeneration, and cookie-domain handling
+- Removed a debug-only CAPTCHA response and switched CAPTCHA digits to `random_int()`
+- Disabled unrestricted controller/action routing in the default template and validated opt-in catch-all path segments
+- Fixed modern PHP syntax compatibility in the Swoole process wrapper and removed debug output
+- Hardened URL generation against untrusted host headers and escaped nested request parameters safely
+- Migrated new OpenSSL helper payloads from legacy Blowfish CBC to versioned AES-256-CBC with HMAC verification before decryption
 
 ## [2.3.6] - 2019-01-22
 

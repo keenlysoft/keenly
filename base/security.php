@@ -15,7 +15,7 @@ class security{
     
     protected $session;
     
-    protected $fontsize = 6;
+    protected $fontsize = 5;
     
     protected $number = 5;
     
@@ -39,7 +39,6 @@ class security{
      */
     private function createCode()
     {
-        $fontsize = 140;
         for($i=0;$i < $this->number;$i++){
             //设置字体大小  
             //设置字体颜色，随机颜色
@@ -51,7 +50,7 @@ class security{
             //设置坐标
             $x = ($i*100/4)+rand(5,10);
             $y = rand(5,10);
-            imagestring($this->image,$fontsize,$x,$y,$fontcontent,$fontcolor);
+            imagestring($this->image,$this->fontsize,$x,$y,$fontcontent,$fontcolor);
         }
         $this->setSession()->disturb();
     }
@@ -77,7 +76,7 @@ class security{
      */
     private function createNumber()
     {
-        return rand(0,9);
+        return random_int(0,9);
         
     }
     
@@ -102,27 +101,11 @@ class security{
     
     public function image()
     {
-        // 建立一幅 100X30 的图像
-        $im = imagecreate(200, 300);
-        
-        // 白色背景和蓝色文本
-        $bg = imagecolorallocate($im, 255, 255, 255);
-        $textcolor = imagecolorallocate($im, 0, 0, 255);
-        
-        // 把字符串写在图像左上角
-        imagestring($im, 40, 30, 150, "Hello world!", $textcolor);
-        
-        // 输出图像
-        header("Content-type: image/png");
-        imagepng($im);
-        exit;
         header('Content-Type: image/png');
         $this->createImage()->createCode();
         imagepng($this->image);
         imagedestroy($this->image);
-        $this->image;
     }
     
     
 }
-

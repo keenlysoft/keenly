@@ -12,7 +12,9 @@ get or post 两种方式路由请求
 ```
 ### 按目录结构访问
 ```
-routes::get('(:all)',false); //All urls are unrestricted 
+routes::get('(:all)',false); //All urls are unrestricted
 ```
+
+This catch-all route is optional. Enable it only when convention-based controller access is required. Explicit route declarations are safer for public applications.
 
 **注意如果不添加 请求全部按照 post或get请求方法；

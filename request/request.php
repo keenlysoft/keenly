@@ -46,7 +46,7 @@ class request{
     {
         $params = $this->getQueryParams();
         
-        return isset($params[$name]) ? htmlspecialchars($params[$name]) : $defaultValue;
+        return isset($params[$name]) ? $this->filterParam($params[$name]) : $defaultValue;
     }
     
     
@@ -66,7 +66,7 @@ class request{
     {
         $params = $this->getBodyParams();
     
-        return isset($params[$name]) ? htmlspecialchars($params[$name]) : $defaultValue;
+        return isset($params[$name]) ? $this->filterParam($params[$name]) : $defaultValue;
     }
     
  
@@ -142,5 +142,13 @@ class request{
         }
     
         return $this->_rawBody;
+    }
+
+    private function filterParam($value)
+    {
+        if (is_array($value)) {
+            return array_map([$this, 'filterParam'], $value);
+        }
+        return htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     }
 }

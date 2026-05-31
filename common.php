@@ -48,28 +48,44 @@ trait common
     
     
     //Openssl Encryption
-    public static function OpensslEncryption($plaintext,$key){    
-        $ivlen = openssl_cipher_iv_length($cipher="BF-CBC");//openssl_get_cipher_methods ()
-        $iv = openssl_random_pseudo_bytes($ivlen);
+    public static function OpensslEncryption($plaintext,$key){
+        $cipher = 'AES-256-CBC';
+        $ivlen = openssl_cipher_iv_length($cipher);
+        $iv = random_bytes($ivlen);
         $ciphertext_raw = openssl_encrypt($plaintext, $cipher, $key, $options = OPENSSL_RAW_DATA, $iv);
+        if($ciphertext_raw === false){
+            return false;
+        }
         $hmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
-        return  base64_encode($iv.$hmac.$ciphertext_raw);
+        return  base64_encode('v2:'.$iv.$hmac.$ciphertext_raw);
     }
-    
-    
+
+
     //openssl decrypt
     public static function OpensslDecrypt($ciphertext,$key){
-        $c = base64_decode($ciphertext);
-        $ivlen = openssl_cipher_iv_length($cipher="BF-CBC");
+        $c = base64_decode($ciphertext, true);
+        if($c === false){
+            return null;
+        }
+        if(strpos($c, 'v2:') === 0){
+            $cipher = 'AES-256-CBC';
+            $c = substr($c, 3);
+        }else{
+            $cipher = 'BF-CBC';
+        }
+        $ivlen = openssl_cipher_iv_length($cipher);
+        if($ivlen === false){
+            return null;
+        }
         $iv = substr($c, 0, $ivlen);
         $hmac = substr($c, $ivlen, $sha2len=32);
         $ciphertext_raw = substr($c, $ivlen+$sha2len);
-        $original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $key, $options=OPENSSL_RAW_DATA, $iv);
         $calcmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
         if (hash_equals($hmac, $calcmac))//PHP 5.6+
         {
-            return $original_plaintext;
+            return openssl_decrypt($ciphertext_raw, $cipher, $key, $options=OPENSSL_RAW_DATA, $iv);
         }
+        return null;
     }
     
     
