@@ -1,12 +1,12 @@
 <?php
 return [
-    'key' => 'fYV5ax93ET.76QgJL3E34Lr49vTtY333',
+	    'key' => '', // Generate a unique secret for each deployed application.
     
     'session_status' => TRUE,
     'session_n' => 'studious_name',//session name
-    'save_state' => true, //redis储存 路径 
-    'save_handler'=> 'redis',// or file
-    'save_path' =>'tcp://192.168.20.153:6379?auth=',// or /temp
+	    'save_state' => false, // Enable when a custom session handler is configured.
+	    'save_handler'=> 'files', // or redis
+	    'save_path' => sys_get_temp_dir(),
     'session_path' => '/',
     'session_domain' => '', //默认当前域名
     'session_indate' => 72*3600,

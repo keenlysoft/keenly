@@ -1,4 +1,4 @@
-k<?php
+<?php
 namespace keenly\component;
 use keenly\base\Singleton;
 

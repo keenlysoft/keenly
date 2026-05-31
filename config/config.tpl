@@ -1,6 +1,6 @@
 <?php
 return [
-    'debug' => true, // debug 开启状态
+	    'debug' => false, // Enable only in a local development environment.
     'api' =>[
         'api' => true,
     ],

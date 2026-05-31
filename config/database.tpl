@@ -10,8 +10,8 @@ return [
                   'driver'    => 'mysql',
                   'host'      => 'localhost',
                   'dbname'  => 'keenly',
-                  'username'  => 'root',
-                  'password'  => '123456',
+	                  'username'  => '',
+	                  'password'  => '',
                   'charset'   => 'utf8',
                   'collation' => 'utf8_general_ci',
                   'prefix'    => '',
@@ -20,8 +20,8 @@ return [
                   'driver'    => 'mysql',
                   'host'      => 'localhost',
                   'dbname'  => 'keenly',
-                  'username'  => 'root',
-                  'password'  => '123456',
+	                  'username'  => '',
+	                  'password'  => '',
                   'charset'   => 'utf8',
                   'collation' => 'utf8_general_ci',
                   'prefix'    => '',
@@ -32,7 +32,7 @@ return [
         'driver'    => 'pconnect', //or connect redis attended mode 
         'host'      => '127.0.0.1',
         'port'      => '6379',
-        'password'  => '1234567',
+	        'password'  => '',
         'selectDB'  => '0', //默认数据库
         'timeout'   => '1',
         'rebinding' => '100'
