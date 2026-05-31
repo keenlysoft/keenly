@@ -4,6 +4,13 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    ignore:
+      - dependency-name: smarty/smarty
+        update-types:
+          - version-update:semver-major
+      - dependency-name: twbs/bootstrap
+        update-types:
+          - version-update:semver-major
   - package-ecosystem: github-actions
     directory: /
     schedule:
