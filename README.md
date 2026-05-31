@@ -170,11 +170,11 @@ Render `{$page}` in the Smarty template to display pagination HTML.
 
 ## Roadmap
 
-- Add a small automated test suite for routing, request parsing, sessions, and configuration
+- Expand automated coverage for sessions, view rendering, and application bootstrapping
 - Audit and document PHP 8.x compatibility across Keenly and `keenlysoft/database`
 - Replace legacy configuration examples with environment-based application configuration
 - Review optional Swoole components against currently supported Swoole versions
-- Prepare the next release after compatibility testing and changelog review
+- Prepare the next compatibility release after the PHP 8.x audit and changelog review
 
 ## Contributing
 
