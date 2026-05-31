@@ -81,7 +81,7 @@ class request{
                 return $this->_bodyParams;
             }
             $rawContentType = $this->getContentType();
-            if (($pos = strpos($rawContentType, ';')) !== false) {
+            if (is_string($rawContentType) && ($pos = strpos($rawContentType, ';')) !== false) {
                 // e.g. application/json; charset=UTF-8
                 $contentType = substr($rawContentType, 0, $pos);
             } else {
@@ -105,11 +105,11 @@ class request{
     public function getMethod()
     {
         if (isset($_POST[$this->methodParam])) {
-            return strtoupper($_POST[$this->methodParam]);
+            return is_string($_POST[$this->methodParam]) ? strtoupper($_POST[$this->methodParam]) : 'POST';
         }
     
         if (isset($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE'])) {
-            return strtoupper($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE']);
+            return is_string($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE']) ? strtoupper($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE']) : 'GET';
         }
     
         if (isset($_SERVER['REQUEST_METHOD'])) {

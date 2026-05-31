@@ -6,11 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [2.4.0] - 2026-06-01
+
 ### Added
 
 - Contributor guide, security policy, code of conduct, issue templates, and pull request template
 - GitHub Actions workflow for Composer validation and PHP syntax linting
 - README sections for features, installation, quick start, requirements, structure, roadmap, and license
+- PHPUnit test suite for containers, request handling, routing validation, and encryption helpers
+- Dependabot configuration for Composer and GitHub Actions updates
 
 ### Changed
 
@@ -33,5 +37,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 Latest published GitHub release. The repository also contains unreleased fixes committed after this release.
 
-[Unreleased]: https://github.com/keenlysoft/keenly/compare/2.3.6...master
+[Unreleased]: https://github.com/keenlysoft/keenly/compare/2.4.0...master
+[2.4.0]: https://github.com/keenlysoft/keenly/compare/2.3.6...2.4.0
 [2.3.6]: https://github.com/keenlysoft/keenly/releases/tag/2.3.6

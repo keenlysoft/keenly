@@ -20,7 +20,7 @@ class Box{
     public function add($key,$callable,...$args):bool
     {
         if(is_callable($callable)){
-            $this->_container[$key]['func'] = \Closure::bind($callable, $this, get_class());
+            $this->_container[$key]['func'] = \Closure::bind($callable, $this, static::class);
             $this->_container[$key]['param'] = $args;
             return true;
         }

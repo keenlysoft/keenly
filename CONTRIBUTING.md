@@ -23,10 +23,11 @@ Validate the package metadata and lint PHP files before submitting a pull reques
 
 ```bash
 composer validate --strict --no-check-publish
-find . -path ./.git -prune -o -name '*.php' -print0 | xargs -0 -n1 php -l
+find . -path ./.git -prune -o -path ./vendor -prune -o -name '*.php' -print0 | xargs -0 -n1 php -l
+composer test
 ```
 
-The repository does not yet include an automated test suite. When changing behavior, describe the manual verification steps in the pull request. Contributions that add focused automated tests are especially useful.
+When changing behavior, add focused automated tests where possible and describe any manual verification steps in the pull request.
 
 ## Pull Requests
 

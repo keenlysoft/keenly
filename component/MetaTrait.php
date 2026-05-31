@@ -11,7 +11,7 @@ trait MetaTrait
         if (!is_callable($methodCallable)) {
             throw new \InvalidArgumentException('Second param must be callable');
         }
-        $this->methods[$methodName] = \Closure::bind($methodCallable, $this, get_class());
+        $this->methods[$methodName] = \Closure::bind($methodCallable, $this, static::class);
     }
     
     public function __call($methodName, array $args)

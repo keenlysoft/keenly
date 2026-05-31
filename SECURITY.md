@@ -2,12 +2,13 @@
 
 ## Supported Versions
 
-Keenly is resuming active maintenance. Until a new release is published, security fixes are evaluated against the latest code on the `master` branch and the most recent stable release, `2.3.6`.
+Security fixes are evaluated against the latest code on the `master` branch and the current stable release.
 
 | Version | Supported |
 | --- | --- |
-| `master` | Best effort |
-| `2.3.6` | Best effort |
+| `master` | Yes |
+| `2.4.x` | Yes |
+| `2.3.x` | Best effort |
 | Older releases | No |
 
 ## Reporting a Vulnerability
