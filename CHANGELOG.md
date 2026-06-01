@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [2.5.0] - 2026-06-01
+
+### Added
+
+- Add CI validation across PHP 7.4, 8.1, 8.2, and 8.3.
+
+### Changed
+
+- Declare support for PHP 7.4 through PHP 8.x.
+- Require `keenlysoft/database ^1.28` as the PHP 8 compatibility baseline.
+- Update CI to `actions/checkout@v6`.
+
 ## [2.4.0] - 2026-06-01
 
 ### Added
@@ -37,6 +49,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 Latest published GitHub release. The repository also contains unreleased fixes committed after this release.
 
-[Unreleased]: https://github.com/keenlysoft/keenly/compare/2.4.0...master
+[Unreleased]: https://github.com/keenlysoft/keenly/compare/2.5.0...master
+[2.5.0]: https://github.com/keenlysoft/keenly/compare/2.4.0...2.5.0
 [2.4.0]: https://github.com/keenlysoft/keenly/compare/2.3.6...2.4.0
 [2.3.6]: https://github.com/keenlysoft/keenly/releases/tag/2.3.6

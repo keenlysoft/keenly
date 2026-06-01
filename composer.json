@@ -18,10 +18,10 @@
 		}
 	],
 	"require" : {
-		"php" : ">=7.1 <8.0",
+		"php" : ">=7.4 <9.0",
 		"twbs/bootstrap" : "^4.6.2",
 		"smarty/smarty" : "^4.5",
-		"keenlysoft/database":"^1.2"
+		"keenlysoft/database":"^1.28"
 	},
 	"autoload" : {
 		"psr-4" : {

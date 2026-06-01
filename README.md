@@ -18,7 +18,7 @@ The project is intentionally compact. It is suitable for developers who want to 
 
 ## Requirements
 
-- PHP 7.1 or later in the PHP 7.x series
+- PHP 7.4 or later, including PHP 8.x
 - Composer
 - `ext-mbstring` for request and route handling
 - `ext-openssl` for the bundled encryption helpers
@@ -30,7 +30,7 @@ Optional extensions depend on the features you use:
 - Redis and the relevant PHP extension for Redis-backed sessions or caching
 - Swoole for the optional process, table, and HTTP server components
 
-PHP 7.4 is the recommended runtime for the current stable line. PHP 8.x support is on the roadmap and should be treated as experimental until the framework and `keenlysoft/database` dependency have been audited and tested together.
+PHP 7.4 remains supported for existing applications. New deployments should prefer a maintained PHP 8.x release.
 
 ## Installation
 
@@ -171,10 +171,10 @@ Render `{$page}` in the Smarty template to display pagination HTML.
 ## Roadmap
 
 - Expand automated coverage for sessions, view rendering, and application bootstrapping
-- Audit and document PHP 8.x compatibility across Keenly and `keenlysoft/database`
+- Expand PHP 8.x integration coverage across Keenly and `keenlysoft/database`
 - Replace legacy configuration examples with environment-based application configuration
 - Review optional Swoole components against currently supported Swoole versions
-- Prepare the next compatibility release after the PHP 8.x audit and changelog review
+- Add static analysis and coding-style checks
 
 ## Contributing
 

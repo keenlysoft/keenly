@@ -7,6 +7,7 @@ Security fixes are evaluated against the latest code on the `master` branch and 
 | Version | Supported |
 | --- | --- |
 | `master` | Yes |
+| `2.5.x` | Yes |
 | `2.4.x` | Yes |
 | `2.3.x` | Best effort |
 | Older releases | No |
