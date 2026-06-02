@@ -20,7 +20,7 @@
 	"require" : {
 		"php" : ">=7.4 <9.0",
 		"twbs/bootstrap" : "^4.6.2",
-		"smarty/smarty" : "^4.5",
+		"smarty/smarty" : "^4.5 || ^5.0",
 		"keenlysoft/database":"^1.28"
 	},
 	"autoload" : {
