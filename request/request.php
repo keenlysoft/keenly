@@ -87,8 +87,11 @@ class request{
             } else {
                 $contentType = $rawContentType;
             }
-            if ($this->getMethod() === 'POST') {
-                //todo 
+            $contentType = is_string($contentType) ? strtolower(trim($contentType)) : $contentType;
+            if ($contentType === 'application/json') {
+                $decoded = json_decode($this->getRawBody(), true);
+                $this->_bodyParams = is_array($decoded) ? $decoded : [];
+            } elseif ($this->getMethod() === 'POST') {
                 $this->_bodyParams = $_POST;
             } else {
                 $this->_bodyParams = [];
@@ -105,15 +108,15 @@ class request{
     public function getMethod()
     {
         if (isset($_POST[$this->methodParam])) {
-            return is_string($_POST[$this->methodParam]) ? strtoupper($_POST[$this->methodParam]) : 'POST';
+            return is_string($_POST[$this->methodParam]) ? $this->normalizeMethod($_POST[$this->methodParam], 'POST') : 'POST';
         }
     
         if (isset($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE'])) {
-            return is_string($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE']) ? strtoupper($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE']) : 'GET';
+            return is_string($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE']) ? $this->normalizeMethod($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE'], 'GET') : 'GET';
         }
     
         if (isset($_SERVER['REQUEST_METHOD'])) {
-            return strtoupper($_SERVER['REQUEST_METHOD']);
+            return $this->normalizeMethod($_SERVER['REQUEST_METHOD'], 'GET');
         }
     
         return 'GET';
@@ -150,5 +153,12 @@ class request{
             return array_map([$this, 'filterParam'], $value);
         }
         return htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    }
+
+    private function normalizeMethod($method, $fallback)
+    {
+        $method = strtoupper(trim((string) $method));
+        $allowed = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'];
+        return in_array($method, $allowed, true) ? $method : $fallback;
     }
 }

@@ -38,4 +38,21 @@ class RequestTest extends TestCase
 
         self::assertSame('POST', (new request())->getMethod());
     }
+
+    public function testRejectsUnknownMethodOverride(): void
+    {
+        $_POST = ['_method' => 'DROP'];
+
+        self::assertSame('POST', (new request())->getMethod());
+    }
+
+    public function testParsesJsonRequestBody(): void
+    {
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $_SERVER['CONTENT_TYPE'] = 'application/json; charset=UTF-8';
+        $request = new request();
+        $request->_rawBody = '{"name":"Keenly"}';
+
+        self::assertSame(['name' => 'Keenly'], $request->post());
+    }
 }

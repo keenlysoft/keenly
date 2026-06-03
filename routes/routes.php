@@ -83,7 +83,9 @@ class routes extends BaseRoutes{
     public  static  function  keenly(){
         self::$Ruri = parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH);
         self::$Rmethod = $_SERVER['REQUEST_METHOD'];
-        self::RequestValidation(self::$Rmethod,self::$Ruri);
+        if (!self::RequestValidation(self::$Rmethod,self::$Ruri)) {
+            return ;
+        }
         if(in_array(strtolower(self::$Rmethod), self::$Rule) && in_array(strtoupper(self::$Rmethod), self::HTTP_Method)){
             if(in_array(strtolower(self::$Ruri), self::$Uri)){
                 if(strpos(self::$PathParams[self::$Ruri]['0'], '@')){
@@ -102,7 +104,8 @@ class routes extends BaseRoutes{
     
     //@todo view web
     private static  function error(){
-        header($_SERVER['SERVER_PROTOCOL']." 404 Not Found");
+        $protocol = isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
+        header($protocol." 404 Not Found");
         k::render('404');
     }
     //
@@ -156,8 +159,8 @@ class routes extends BaseRoutes{
         }
       
         $control = self::interest($class);
-        if (!method_exists($control, $fun)) {
-            echo "controller and action not found";
+        if (!self::isCallableAction($control, $fun)) {
+            self::error();
             return ;
         } else {
            $control->$fun();
@@ -173,9 +176,24 @@ class routes extends BaseRoutes{
      */
     private static function RequestValidation($method,$uri){
         if(strtolower($method) != (isset(self::$PathParams[$uri])?self::$PathParams[$uri]['1']:strtolower($method))){
-            header($_SERVER['SERVER_PROTOCOL']." 404 Not Found");
-            die("Request mode error");
+            self::error();
+            return false;
         }
+        return true;
+    }
+
+    private static function isCallableAction($control, $fun){
+        if (!is_string($fun) || !preg_match('/^[A-Za-z_][A-Za-z0-9_]*$/', $fun)) {
+            return false;
+        }
+        if (strpos($fun, '__') === 0 || strpos($fun, '_') === 0) {
+            return false;
+        }
+        if (!method_exists($control, $fun)) {
+            return false;
+        }
+        $method = new \ReflectionMethod($control, $fun);
+        return $method->isPublic() && !$method->isStatic();
     }
     
     /**

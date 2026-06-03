@@ -56,13 +56,14 @@ class sessionHandler  extends \SessionHandler {
     
     
     private function setSession($C){
-        session_set_cookie_params(
-            $C['session_indate'],
-            $C['session_path'],
-            $C['session_domain'],
-            $C['http_session_secure'],
-            $C['session_httponly']
-        );
+        session_set_cookie_params([
+            'lifetime' => $C['session_indate'],
+            'path' => $C['session_path'],
+            'domain' => $C['session_domain'],
+            'secure' => $C['http_session_secure'],
+            'httponly' => $C['session_httponly'],
+            'samesite' => isset($C['session_samesite']) ? $C['session_samesite'] : 'Lax',
+        ]);
     }
     
     

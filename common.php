@@ -20,11 +20,25 @@ trait common
     
     static function logs($arg, $logName = 'debug')
     {
-        $url  ='../logs/' . $logName . '.log.' . date('Ymd');
+        $logName = basename((string) $logName);
+        $logName = preg_replace('/[^A-Za-z0-9_.-]/', '_', $logName);
+        if ($logName === '' || $logName === '.' || $logName === '..') {
+            $logName = 'debug';
+        }
+
+        $logDir = '../logs';
+        if (!is_dir($logDir)) {
+            mkdir($logDir, 0775, true);
+        }
+
+        $url  = $logDir . '/' . $logName . '.log.' . date('Ymd');
         $fp = fopen($url, 'a');
+        if ($fp === false) {
+            return;
+        }
         $traces = debug_backtrace();
         $logMsg = 'FILE:' . basename($traces[0]['file']) . PHP_EOL;
-        $logMsg .= 'FUNC:' . $traces[1]['function'] . PHP_EOL;
+        $logMsg .= 'FUNC:' . (isset($traces[1]['function']) ? $traces[1]['function'] : 'global') . PHP_EOL;
         $logMsg .= 'LINE:' . $traces[0]['line'] . PHP_EOL;
         if (is_string($arg)) {
             $logMsg .= 'ARGS:' . $arg . PHP_EOL;
@@ -56,8 +70,8 @@ trait common
         if($ciphertext_raw === false){
             return false;
         }
-        $hmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
-        return  base64_encode('v2:'.$iv.$hmac.$ciphertext_raw);
+        $hmac = hash_hmac('sha256', $iv.$ciphertext_raw, $key, $as_binary = true);
+        return  base64_encode('v3:'.$iv.$hmac.$ciphertext_raw);
     }
 
 
@@ -67,11 +81,17 @@ trait common
         if($c === false){
             return null;
         }
-        if(strpos($c, 'v2:') === 0){
+        if(strpos($c, 'v3:') === 0){
             $cipher = 'AES-256-CBC';
+            $version = 'v3';
+            $c = substr($c, 3);
+        }elseif(strpos($c, 'v2:') === 0){
+            $cipher = 'AES-256-CBC';
+            $version = 'v2';
             $c = substr($c, 3);
         }else{
             $cipher = 'BF-CBC';
+            $version = 'legacy';
         }
         $ivlen = openssl_cipher_iv_length($cipher);
         if($ivlen === false){
@@ -80,7 +100,11 @@ trait common
         $iv = substr($c, 0, $ivlen);
         $hmac = substr($c, $ivlen, $sha2len=32);
         $ciphertext_raw = substr($c, $ivlen+$sha2len);
-        $calcmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
+        if(strlen($iv) !== $ivlen || strlen($hmac) !== $sha2len || $ciphertext_raw === ''){
+            return null;
+        }
+        $authenticatedPayload = $version === 'v3' ? $iv.$ciphertext_raw : $ciphertext_raw;
+        $calcmac = hash_hmac('sha256', $authenticatedPayload, $key, $as_binary = true);
         if (hash_equals($hmac, $calcmac))//PHP 5.6+
         {
             return openssl_decrypt($ciphertext_raw, $cipher, $key, $options=OPENSSL_RAW_DATA, $iv);

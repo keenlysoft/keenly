@@ -23,6 +23,13 @@ class RoutesTest extends TestCase
         self::assertFalse($this->isValidPath($path));
     }
 
+    public function testRejectsInternalControllerActions(): void
+    {
+        self::assertFalse($this->isCallableAction(new RouteControllerFixture(), '_internal'));
+        self::assertFalse($this->isCallableAction(new RouteControllerFixture(), '__construct'));
+        self::assertTrue($this->isCallableAction(new RouteControllerFixture(), 'index'));
+    }
+
     public function validPaths(): array
     {
         return [
@@ -50,5 +57,26 @@ class RoutesTest extends TestCase
         }
 
         return $method->invoke(null, $path);
+    }
+
+    private function isCallableAction(object $controller, string $action): bool
+    {
+        $method = new \ReflectionMethod(routes::class, 'isCallableAction');
+        if (PHP_VERSION_ID < 80100) {
+            $method->setAccessible(true);
+        }
+
+        return $method->invoke(null, $controller, $action);
+    }
+}
+
+class RouteControllerFixture
+{
+    public function index(): void
+    {
+    }
+
+    public function _internal(): void
+    {
     }
 }

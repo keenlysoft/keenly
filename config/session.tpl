@@ -12,4 +12,5 @@ return [
     'session_indate' => 72*3600,
     'http_session_secure' => false, //ture = https,flase = http,
     'session_httponly' => TRUE,
+    'session_samesite' => 'Lax',
 ];
